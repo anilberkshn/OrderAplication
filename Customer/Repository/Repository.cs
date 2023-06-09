@@ -14,9 +14,9 @@ namespace Customer.Repository
         {
         }
 
-        public Model.Entities.Customer GetById(Guid id)
+        public async Task<Model.Entities.Customer> GetById(Guid id)
         {
-            var order = FindOneAsync(x => x.Id == id).GetAwaiter().GetResult();
+            var order = await FindOneAsync(x => x.Id == id);
             return order;
         }
 

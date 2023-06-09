@@ -7,7 +7,7 @@ namespace Customer.Services
 {
     public interface IService
     {
-        public Customer.Model.Entities.Customer GetById(Guid id);
+        public Task<Model.Entities.Customer> GetById(Guid id);
         
         public Task<IEnumerable<Model.Entities.Customer>> GetAllAsync();
         public Task<Guid> InsertAsync(Model.Entities.Customer customer);

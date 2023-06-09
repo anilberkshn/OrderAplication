@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Customer.Model.ErrorModels;
 using Customer.Model.RequestModels;
 using Customer.Repository;
 
@@ -17,18 +18,17 @@ namespace Customer.Services
         }
 
 
-        public Model.Entities.Customer GetById(Guid id)
+        public async Task<Model.Entities.Customer> GetById(Guid id)
         {
-            var customer = _repository.GetById(id);
+            var customer = await _repository.GetById(id);
             
             if (customer == null)
             {
-                // hangisi daha 
-                // throw new Exception(HttpStatusCode.BadRequest,"Müşteri bulunamadı.");
+                throw new CustomerException(HttpStatusCode.BadRequest,"Müşteri bulunamadı.");
             }                   
             if (customer.IsDeleted)    
             {
-                // throw new Exception(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
+                throw new CustomerException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
             }
             
             return customer;

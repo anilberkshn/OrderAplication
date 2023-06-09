@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Customer.Model.RequestModels;
 using Customer.Model.Response;
 using Customer.Services;
@@ -8,7 +9,7 @@ namespace Customer.Controllers
 {
     
     [ApiController]
-    [Route("api/customers")]
+    [Route("api/customer")]
     public class CustomerController : ControllerBase
     {
         private readonly IService _iService;
@@ -26,7 +27,6 @@ namespace Customer.Controllers
                 Name = createDto.Name,
                 Email = createDto.Email,
                 Address = createDto.Address,
-               
             };
 
             _iService.InsertAsync(customer);
@@ -39,23 +39,23 @@ namespace Customer.Controllers
         }
 
         [HttpGet("GetById")]
-        public IActionResult GetById(Guid guid)
+        public async Task<IActionResult> GetById(Guid guid)
         {
-            var findOne = _iService.GetById(guid);
+            var findOne = await _iService.GetById(guid);
             return Ok(findOne);
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var getAll = _iService.GetAllAsync();
+            var getAll = await _iService.GetAllAsync();
             return Ok(getAll);
         }
 
         [HttpDelete("HardDelete")]
-        public IActionResult HardDelete(Guid guid)
+        public async Task <IActionResult> HardDelete(Guid guid)
         {
-            var byId = _iService.GetById(guid);
+            var byId = await _iService.GetById(guid);
             _iService.Delete(byId.Id);
             return Ok(guid);
         }
@@ -70,9 +70,9 @@ namespace Customer.Controllers
 
 
         [HttpPut("SoftDelete")]
-        public IActionResult SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
+        public async Task<IActionResult> SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
         {
-            var order = _iService.GetById(guid);
+            var order = await _iService.GetById(guid);
             _iService.SoftDelete(order.Id, softDeleteDto);
             return Ok(guid);
         }
