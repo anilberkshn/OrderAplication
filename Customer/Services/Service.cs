@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Customer.Model.RequestModels;
+using Customer.Repository;
+
+namespace Customer.Services
+{
+    public class Service: IService
+    {
+        private readonly IRepository _repository;
+
+        public Service(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+
+        public Model.Entities.Customer GetById(Guid id)
+        {
+            var customer = _repository.GetById(id);
+            
+            if (customer == null)
+            {
+                // hangisi daha 
+                // throw new Exception(HttpStatusCode.BadRequest,"Müşteri bulunamadı.");
+            }                   
+            if (customer.IsDeleted)    
+            {
+                // throw new Exception(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
+            }
+            
+            return customer;
+        }
+
+        public Task<IEnumerable<Model.Entities.Customer>> GetAllAsync()
+        {
+            return _repository.GetAllAsync();
+        }
+
+        public Task<Guid> InsertAsync(Model.Entities.Customer customer)
+        {
+            return _repository.InsertAsync(customer);
+        }
+
+        public void Update(Guid guid, UpdateDto updateDto)
+        {
+            _repository.Update(guid,updateDto);
+        }
+
+        public Guid Delete(Guid guid)
+        {
+            return _repository.Delete(guid);
+        }
+
+        public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto)
+        {
+            _repository.SoftDelete(guid,softDeleteDto);
+        }
+    }
+}

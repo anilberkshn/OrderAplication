@@ -1,20 +1,19 @@
 using System;
+using Customer.Model.RequestModels;
+using Customer.Model.Response;
+using Customer.Services;
 using Microsoft.AspNetCore.Mvc;
-using OrderCase.Model;
-using OrderCase.Model.Entities;
-using OrderCase.Model.RequestModels;
-using OrderCase.Services;
 
-namespace OrderCase.Controllers
+namespace Customer.Controllers
 {
     
     [ApiController]
-    [Route("api/order")]
-    public class OrderController : ControllerBase
+    [Route("api/customers")]
+    public class CustomerController : ControllerBase
     {
         private readonly IService _iService;
 
-        public OrderController(IService iService)
+        public CustomerController(IService iService)
         {
             _iService = iService;
         }
@@ -22,21 +21,19 @@ namespace OrderCase.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateDto createDto)
         {
-            var order = new Order()
+            var customer = new global::Customer.Model.Entities.Customer()
             {
-                CustomerId = createDto.CustomerId,
-                Quantity = createDto.Quantity,
-                Price = createDto.Price,
-                Status = createDto.Status,
+                Name = createDto.Name,
+                Email = createDto.Email,
                 Address = createDto.Address,
-                Product = createDto.Product
+               
             };
 
-            _iService.InsertAsync(order);
+            _iService.InsertAsync(customer);
 
             var response = new CreateResponse()
             {
-                Id = order.Id
+                Id = customer.Id
             };
             return Ok(response);
         }
@@ -66,9 +63,9 @@ namespace OrderCase.Controllers
         [HttpPut]
         public IActionResult UpdateDeveloper(Guid guid, [FromBody] UpdateDto updateDto)
         {
-            var order = _iService.GetById(guid);
+            var customer = _iService.GetById(guid);
             _iService.Update(guid, updateDto);
-            return Ok(order);
+            return Ok(customer);
         }
 
 

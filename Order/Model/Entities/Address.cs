@@ -1,6 +1,6 @@
 namespace OrderCase.Model.Entities
 {
-    public class Adress
+    public class Address
     {
         public string Addressline { get; set; }
         public string City { get; set; }

@@ -45,7 +45,7 @@ namespace OrderCase.Repository
 
         public Guid Delete(Guid guid)
         {
-            return Delete(x => x.Id == guid);
+          return  Delete(x => x.Id == guid);
         }
 
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto)
