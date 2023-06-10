@@ -15,9 +15,9 @@ namespace OrderCase.Repository
         {
         }
 
-        public Order GetById(Guid id)
+        public async Task<Order> GetByIdAsync(Guid id)
         {
-            var order = FindOneAsync(x => x.Id == id).GetAwaiter().GetResult();
+            var order = await FindOneAsync(x => x.Id == id);
             return order;
         }
 

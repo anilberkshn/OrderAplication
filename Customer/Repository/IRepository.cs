@@ -7,7 +7,7 @@ namespace Customer.Repository
 {
     public interface IRepository
     {
-        public Task<Model.Entities.Customer> GetById(Guid id);
+        public Task<Model.Entities.Customer> GetByIdAsync(Guid id);
         public Task<IEnumerable<Model.Entities.Customer>> GetAllAsync();
         public Task<Guid> InsertAsync(Model.Entities.Customer customer);
         public void Update(Guid guid, UpdateDto updateDto);

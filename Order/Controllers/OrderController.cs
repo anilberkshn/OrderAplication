@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OrderCase.Model;
 using OrderCase.Model.Entities;
@@ -41,24 +42,24 @@ namespace OrderCase.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetById")]
-        public IActionResult GetById(Guid guid)
+        [HttpGet("GetByIdAsync")]
+        public async Task<IActionResult> GetByIdAsync(Guid guid)
         {
-            var findOne = _iService.GetById(guid);
+            var findOne = await _iService.GetByIdAsync(guid);
             return Ok(findOne);
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllAsync")]
+        public async Task<IActionResult> GetAllAsync()
         {
-            var getAll = _iService.GetAllAsync();
+            var getAll =  await _iService.GetAllAsync();
             return Ok(getAll);
         }
 
         [HttpDelete("HardDelete")]
-        public IActionResult HardDelete(Guid guid)
+        public async Task< IActionResult> HardDelete(Guid guid)
         {
-            var byId = _iService.GetById(guid);
+            var byId = await _iService.GetByIdAsync(guid);
             _iService.Delete(byId.Id);
             return Ok(guid);
         }
@@ -66,16 +67,16 @@ namespace OrderCase.Controllers
         [HttpPut]
         public IActionResult UpdateDeveloper(Guid guid, [FromBody] UpdateDto updateDto)
         {
-            var order = _iService.GetById(guid);
+            var order = _iService.GetByIdAsync(guid);
             _iService.Update(guid, updateDto);
             return Ok(order);
         }
 
 
         [HttpPut("SoftDelete")]
-        public IActionResult SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
+        public async Task<IActionResult>SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
         {
-            var order = _iService.GetById(guid);
+            var order = await _iService.GetByIdAsync(guid);
             _iService.SoftDelete(order.Id, softDeleteDto);
             return Ok(guid);
         }

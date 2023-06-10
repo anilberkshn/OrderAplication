@@ -8,7 +8,7 @@ namespace OrderCase.Services
 {
     public interface IService
     {
-        public Order GetById(Guid id);
+        public Task<Order> GetByIdAsync(Guid id);
         
         public Task<IEnumerable<Order>> GetAllAsync();
         public Task<Guid> InsertAsync(Order order);

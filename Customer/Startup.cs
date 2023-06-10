@@ -46,7 +46,7 @@ namespace Customer
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
-            services.AddSingleton<IService, Customer.Services.Service>();
+            services.AddSingleton<IService, Service>();
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<IRepository, Repository.Repository>();
         }

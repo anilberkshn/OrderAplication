@@ -20,9 +20,9 @@ namespace OrderCase.Services
         }
 
 
-        public Order GetById(Guid id)
+        public async Task<Order> GetByIdAsync(Guid id)
         {
-            var order = _repository.GetById(id);
+            var order = await _repository.GetByIdAsync(id);
             
             if (order == null)
             {

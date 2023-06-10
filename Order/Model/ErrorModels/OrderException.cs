@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace OrderCase.Model.ErrorModels
 {
+    [JsonObject (MemberSerialization.OptIn)]
     public class OrderException: SystemException
     {
         

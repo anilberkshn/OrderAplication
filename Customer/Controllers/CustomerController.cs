@@ -38,15 +38,15 @@ namespace Customer.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(Guid guid)
+        [HttpGet("GetByIdAsync")]
+        public async Task<IActionResult> GetByIdAsync(Guid guid)
         {
-            var findOne = await _iService.GetById(guid);
+            var findOne = await _iService.GetByIdAsync(guid);
             return Ok(findOne);
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("GetAllAsync")]
+        public async Task<IActionResult> GetAllAsync()
         {
             var getAll = await _iService.GetAllAsync();
             return Ok(getAll);
@@ -55,15 +55,15 @@ namespace Customer.Controllers
         [HttpDelete("HardDelete")]
         public async Task <IActionResult> HardDelete(Guid guid)
         {
-            var byId = await _iService.GetById(guid);
+            var byId = await _iService.GetByIdAsync(guid);
             _iService.Delete(byId.Id);
             return Ok(guid);
         }
 
         [HttpPut]
-        public IActionResult UpdateDeveloper(Guid guid, [FromBody] UpdateDto updateDto)
+        public IActionResult Update(Guid guid, [FromBody] UpdateDto updateDto)
         {
-            var customer = _iService.GetById(guid);
+            var customer = _iService.GetByIdAsync(guid);
             _iService.Update(guid, updateDto);
             return Ok(customer);
         }
@@ -72,7 +72,7 @@ namespace Customer.Controllers
         [HttpPut("SoftDelete")]
         public async Task<IActionResult> SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
         {
-            var order = await _iService.GetById(guid);
+            var order = await _iService.GetByIdAsync(guid);
             _iService.SoftDelete(order.Id, softDeleteDto);
             return Ok(guid);
         }

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Customer.Model.ErrorModels
 {
+    [JsonObject (MemberSerialization.OptIn)]
     public class CustomerException: SystemException
     {
         
