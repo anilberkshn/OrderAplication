@@ -13,17 +13,17 @@ namespace OrderCase.Controllers
     [Route("api/order")]
     public class OrderController : ControllerBase
     {
-        private readonly IService _iService;
+        private readonly IOrderService _orderService;
 
-        public OrderController(IService iService)
+        public OrderController(IOrderService orderService)
         {
-            _iService = iService;
+            _orderService = orderService;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateDto createDto)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateDto createDto)
         {
-            var order = new Order()
+            var order = new OrderModel()
             {
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
@@ -33,7 +33,7 @@ namespace OrderCase.Controllers
                 Product = createDto.Product
             };
 
-            _iService.InsertAsync(order);
+            await _orderService.InsertAsync(order);
 
             var response = new CreateResponse()
             {
@@ -42,42 +42,41 @@ namespace OrderCase.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetByIdAsync")]
-        public async Task<IActionResult> GetByIdAsync(Guid guid)
+        [HttpGet("{id}")] //TODO: Deneme için değiştirildi.
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var findOne = await _iService.GetByIdAsync(guid);
+            var findOne = await _orderService.GetByIdAsync(id);
             return Ok(findOne);
         }
 
-        [HttpGet("GetAllAsync")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var getAll =  await _iService.GetAllAsync();
+            var getAll =  await _orderService.GetAllAsync();
             return Ok(getAll);
         }
 
         [HttpDelete("HardDelete")]
-        public async Task< IActionResult> HardDelete(Guid guid)
+        public async Task<IActionResult> HardDeleteAsync(Guid guid)
         {
-            var byId = await _iService.GetByIdAsync(guid);
-            _iService.Delete(byId.Id);
+            var byId = await _orderService.GetByIdAsync(guid);
+            _orderService.Delete(byId.Id);
             return Ok(guid);
         }
 
         [HttpPut]
-        public IActionResult UpdateDeveloper(Guid guid, [FromBody] UpdateDto updateDto)
+        public async Task<IActionResult> UpdateDeveloperAsync(Guid guid, [FromBody] UpdateDto updateDto)
         {
-            var order = _iService.GetByIdAsync(guid);
-            _iService.Update(guid, updateDto);
+            var order = await _orderService.GetByIdAsync(guid);
+            _orderService.Update(guid, updateDto);
             return Ok(order);
         }
 
-
         [HttpPut("SoftDelete")]
-        public async Task<IActionResult>SoftDelete(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
+        public async Task<IActionResult>SoftDeleteAsync(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
         {
-            var order = await _iService.GetByIdAsync(guid);
-            _iService.SoftDelete(order.Id, softDeleteDto);
+            var order = await _orderService.GetByIdAsync(guid);
+            _orderService.SoftDelete(order.Id, softDeleteDto);
             return Ok(guid);
         }
     }

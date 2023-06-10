@@ -2,7 +2,7 @@ using System;
 
 namespace OrderCase.Model.Entities
 {
-    public class Order: Document
+    public class OrderModel: Document
     {
         public Guid CustomerId { get; set; }
         public int Quantity { get; set; }

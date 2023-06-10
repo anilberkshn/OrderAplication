@@ -32,16 +32,16 @@ namespace OrderCase
             services.AddControllers().AddFluentValidation(fv=> fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderModel", Version = "v1" });
             });
             
             var dbSettings = Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
-            services.AddSingleton<IService, OrderCase.Services.Service>();
+            services.AddSingleton<IOrderService, OrderCase.Services.OrderService>();
             services.AddSingleton<IContext, Context>(_ => context);
-            services.AddSingleton<IRepository, Repository.Repository>();
+            services.AddSingleton<IOrderRepository, Repository.OrderRepository>();
 
         }
 
@@ -51,7 +51,7 @@ namespace OrderCase
             if (env.IsDevelopment())
             {                
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderModel v1"));
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();

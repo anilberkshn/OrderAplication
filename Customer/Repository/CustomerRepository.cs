@@ -3,36 +3,37 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Customer.Database;
 using Customer.Database.Interface;
+using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using MongoDB.Driver;
 
 namespace Customer.Repository
 {
-    public class Repository: GenericRepository<Model.Entities.Customer>, IRepository
+    public class CustomerRepository: GenericRepository<CustomerModel>, ICustomerRepository
     {
-        public Repository(IContext context, string collectionName = "Customer") : base(context, collectionName)
+        public CustomerRepository(IContext context, string collectionName = "Customer") : base(context, collectionName)
         {
         }
 
-        public async Task<Model.Entities.Customer> GetByIdAsync(Guid id)
+        public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
             var order = await FindOneAsync(x => x.Id == id);
             return order;
         }
 
-        public async Task<IEnumerable<Model.Entities.Customer>> GetAllAsync()
+        public async Task<IEnumerable<CustomerModel>> GetAllAsync()
         {
             return await FindAllAsync();
         }
 
-        public async Task<Guid> InsertAsync(Model.Entities.Customer customer)
+        public async Task<Guid> InsertAsync(CustomerModel customerModel)
         {
-            return await CreateAsync(customer);
+            return await CreateAsync(customerModel);
         }
 
         public void Update(Guid guid, UpdateDto updateDto)
         {
-            var update = Builders<Model.Entities.Customer>.Update
+            var update = Builders<CustomerModel>.Update
                 .Set(x => x.Name, updateDto.Name)
                 .Set(x => x.Email, updateDto.Email)
                 .Set(x => x.Address, updateDto.Address);
@@ -47,7 +48,7 @@ namespace Customer.Repository
 
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto)
         {
-            var softDelete  = Builders<Model.Entities.Customer>.Update
+            var softDelete  = Builders<CustomerModel>.Update
                     .Set(x => x.DeleteTime, softDeleteDto.DeletedTime)
                     .Set(x => x.IsDeleted, softDeleteDto.IsDeleted)
                 ;

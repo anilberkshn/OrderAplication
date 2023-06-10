@@ -39,16 +39,16 @@ namespace Customer
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Customer", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerModel", Version = "v1" });
             });
            
             var dbSettings = Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
-            services.AddSingleton<IService, Service>();
+            services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IContext, Context>(_ => context);
-            services.AddSingleton<IRepository, Repository.Repository>();
+            services.AddSingleton<ICustomerRepository, Repository.CustomerRepository>();
         }
         
         
@@ -60,7 +60,7 @@ namespace Customer
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerModel v1"));
             }
            
             app.UseMiddleware<ErrorHandlingMiddleware>();

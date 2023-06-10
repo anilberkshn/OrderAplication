@@ -7,9 +7,11 @@ using Customer.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
-using static Customer.Model.Entities.Customer;
+using Customer.Model;
+// using OrderCase.order.Model;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-using Customers = Customer.Model.Entities.Customer;
+// using Customers = CustomerModel.Model.Entities.CustomerModel;
+// using Orders = Order.Model.Entities.CustomerModel;
 
 namespace ProjectTester
 {
@@ -19,8 +21,8 @@ namespace ProjectTester
         [Test]
         public void GetByIdTest()
         {
-            var mockRepository = new Mock<IRepository>();
-            var customer = new global::Customer.Model.Entities.Customer
+            var mockRepository = new Mock<ICustomerRepository>();
+            var customer = new global::Customer.Model.Entities.CustomerModel
             {
                 Id = Guid.Parse("95632ff5-5f05-44cf-bff6-8d44d9057cc5"),
                 Name = "Ahmet",
@@ -39,29 +41,29 @@ namespace ProjectTester
             //     UpdatedTime = customer.UpdatedTime,
             //
             // });
-            var Service = new Customers();
+            // var CustomerService = new Customers();
         }
         [Test]
         public void GetByIdTestOrder()
         {
-            var mockRepository = new Mock<I>();
-            var order = new order
-            {
-                
-            };
-            mockRepository.Setup(x => x.GetByIdAsync(customer.Id)).Returns(new Customers()
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                Address = customer.Address,
-                CreatedTime = customer.CreatedTime,
-                DeleteTime = customer.DeleteTime,
-                Email = customer.Email,
-                IsDeleted = customer.IsDeleted,
-                UpdatedTime = customer.UpdatedTime,
-
-            });
-            var Service = new Customers();
+            // var mockRepository = new Mock<ICustomerRepository>();
+            // var customer = new Customers()
+            // {
+            //     
+            // };
+            // mockRepository.Setup(x => x.GetByIdAsync(customer.Id)).Returns(new OrderCase.Order.Model.Entities.Order()
+            // {
+            //     Id = customer.Id,
+            //     Name = customer.Name,
+            //     Address = customer.Address,
+            //     CreatedTime = customer.CreatedTime,
+            //     DeleteTime = customer.DeleteTime,
+            //     Email = customer.Email,
+            //     IsDeleted = customer.IsDeleted,
+            //     UpdatedTime = customer.UpdatedTime,
+            //
+            // });
+            // var CustomerService = new OrderCase.Order.Model.Entities.Order();
         }
     }
 }

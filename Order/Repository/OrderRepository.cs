@@ -9,31 +9,31 @@ using OrderCase.Model.RequestModels;
 
 namespace OrderCase.Repository
 {
-    public class Repository: GenericRepository<Order>, IRepository
+    public class OrderRepository: GenericRepository<OrderModel>, IOrderRepository
     {
-        public Repository(IContext context, string collectionName = "Order ") : base(context, collectionName)
+        public OrderRepository(IContext context, string collectionName = "Order ") : base(context, collectionName)
         {
         }
 
-        public async Task<Order> GetByIdAsync(Guid id)
+        public async Task<OrderModel> GetByIdAsync(Guid id)
         {
             var order = await FindOneAsync(x => x.Id == id);
             return order;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
             return await FindAllAsync();
         }
 
-        public async Task<Guid> InsertAsync(Order order)
+        public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
-            return await CreateAsync(order);
+            return await CreateAsync(orderModel);
         }
 
         public void Update(Guid guid, UpdateDto updateDto)
         {
-            var update = Builders<Order>.Update
+            var update = Builders<OrderModel>.Update
                 .Set(x => x.Quantity, updateDto.Quantity)
                 .Set(x => x.Price, updateDto.Price)
                 .Set(x => x.Status, updateDto.Status)
@@ -50,7 +50,7 @@ namespace OrderCase.Repository
 
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto)
         {
-            var softDelete  = Builders<Order>.Update
+            var softDelete  = Builders<OrderModel>.Update
                     .Set(x => x.DeleteTime, softDeleteDto.DeletedTime)
                     .Set(x => x.IsDeleted, softDeleteDto.IsDeleted)
                 ;
