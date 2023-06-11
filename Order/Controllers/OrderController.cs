@@ -42,7 +42,7 @@ namespace OrderCase.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")] //TODO: Deneme için değiştirildi.
+        [HttpGet("GetById")] 
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var findOne = await _orderService.GetByIdAsync(id);
@@ -57,27 +57,27 @@ namespace OrderCase.Controllers
         }
 
         [HttpDelete("HardDelete")]
-        public async Task<IActionResult> HardDeleteAsync(Guid guid)
+        public async Task<IActionResult> HardDeleteAsync(Guid id)
         {
-            var byId = await _orderService.GetByIdAsync(guid);
+            var byId = await _orderService.GetByIdAsync(id);
             _orderService.Delete(byId.Id);
-            return Ok(guid);
+            return Ok(id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateDeveloperAsync(Guid guid, [FromBody] UpdateDto updateDto)
+        public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
-            var order = await _orderService.GetByIdAsync(guid);
-            _orderService.Update(guid, updateDto);
+            var order = await _orderService.GetByIdAsync(id);
+            _orderService.Update(id, updateDto);
             return Ok(order);
         }
 
         [HttpPut("SoftDelete")]
-        public async Task<IActionResult>SoftDeleteAsync(Guid guid, [FromBody] SoftDeleteDto softDeleteDto)
+        public async Task<IActionResult>SoftDeleteAsync(Guid id, [FromBody] SoftDeleteDto softDeleteDto)
         {
-            var order = await _orderService.GetByIdAsync(guid);
+            var order = await _orderService.GetByIdAsync(id);
             _orderService.SoftDelete(order.Id, softDeleteDto);
-            return Ok(guid);
+            return Ok(id);
         }
     }
 }
