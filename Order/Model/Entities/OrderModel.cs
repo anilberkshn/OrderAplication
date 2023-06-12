@@ -9,7 +9,6 @@ namespace OrderCase.Model.Entities
         public double Price { get; set; }
         public string Status { get; set; }
         public Address Address { get; set; }
-        
         public Product Product { get; set; }
     
     }
