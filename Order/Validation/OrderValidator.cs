@@ -14,7 +14,7 @@ namespace OrderCase.Validation
             RuleFor(x => x.Price).NotNull().NotEmpty().WithMessage("cannot be empty");
             RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("cannot be empty"); 
             RuleFor(x => x.Product).NotNull().NotEmpty().WithMessage("cannot be empty");
-            RuleFor(x => x.Status).NotNull().NotEmpty().WithMessage("cannot be empty");
+            
         }
     }
 }

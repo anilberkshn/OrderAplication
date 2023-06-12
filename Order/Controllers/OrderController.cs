@@ -10,7 +10,7 @@ namespace OrderCase.Controllers
 {
     
     [ApiController]
-    [Route("api/order")]
+    [Route("api/orders")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -28,7 +28,6 @@ namespace OrderCase.Controllers
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
                 Price = createDto.Price,
-                Status = createDto.Status,
                 Address = createDto.Address,
                 Product = createDto.Product
             };

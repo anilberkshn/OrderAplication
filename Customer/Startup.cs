@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Customer.Config;
+using Core.Model.Config;
 using Customer.Database.Context;
 using Customer.Database.Interface;
 using Customer.Middlewares;
@@ -11,12 +8,9 @@ using Customer.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 
@@ -42,7 +36,7 @@ namespace Customer
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerModel", Version = "v1" });
             });
            
-            var dbSettings = Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
+            var dbSettings = Configuration.GetSection("DatabaseSettings").Get<GenericDatabaseSettings>();
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             

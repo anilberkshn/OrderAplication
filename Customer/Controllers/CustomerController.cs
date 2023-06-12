@@ -10,7 +10,7 @@ namespace Customer.Controllers
 {
     
     [ApiController]
-    [Route("api/customer")]
+    [Route("api/customers")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;

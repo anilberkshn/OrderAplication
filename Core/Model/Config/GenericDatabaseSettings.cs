@@ -1,6 +1,6 @@
-namespace OrderCase.Config
+namespace Core.Model.Config
 {
-    public class DatabaseSettings
+    public class GenericDatabaseSettings
     {
         public string ConnectionString { get; set; }
         

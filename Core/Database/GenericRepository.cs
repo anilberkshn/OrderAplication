@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.Database.Interface;
 using Core.Model;
 using Core.Model.Entities;
 using MongoDB.Driver;
-using OrderCase.Database.Interface;
-using OrderCase.Model.Entities;
 
-namespace OrderCase.Database
+namespace Core.Database
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : GenericDocument
     {

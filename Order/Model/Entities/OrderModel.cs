@@ -1,8 +1,11 @@
 using System;
+using Core.Model;
+using Core.Model.Entities;
+using Newtonsoft.Json;
 
 namespace OrderCase.Model.Entities
 {
-    public class OrderModel: Document
+    public class OrderModel: GenericDocument
     {
         public Guid CustomerId { get; set; }
         public int Quantity { get; set; }

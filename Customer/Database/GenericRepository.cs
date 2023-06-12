@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.Model.Entities;
 using Customer.Database.Interface;
 using Customer.Model.Entities;
 using MongoDB.Driver;
 
 namespace Customer.Database
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : Document
+    public class GenericRepository<T> : IGenericRepository<T> where T : GenericDocument
     {
         private readonly IMongoCollection<T> _collection;
 

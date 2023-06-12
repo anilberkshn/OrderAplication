@@ -1,4 +1,6 @@
 using System;
+using Core.Model;
+using Core.Model.Config;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using OrderCase.Config;
 using OrderCase.Database.Context;
 using OrderCase.Database.Interface;
 using OrderCase.Middlewares;
@@ -35,7 +36,7 @@ namespace OrderCase
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderModel", Version = "v1" });
             });
             
-            var dbSettings = Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
+            var dbSettings = Configuration.GetSection("DatabaseSettings").Get<GenericDatabaseSettings>();
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
