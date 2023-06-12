@@ -23,7 +23,7 @@ namespace Customer.Controllers
         [HttpPost]
         public async Task<IActionResult>CreateAsync([FromBody] CreateDto createDto)
         {
-            var customer = new CustomerModel()
+            var customer = new Model.Entities.CustomerModel()
             {
                 Name = createDto.Name,
                 Email = createDto.Email,

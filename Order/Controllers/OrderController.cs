@@ -50,6 +50,7 @@ namespace OrderCase.Controllers
         }
 
         [HttpGet("GetAll")]
+        // [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var getAll =  await _orderService.GetAllAsync();

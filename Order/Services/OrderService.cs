@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Customer.Model.Entities;
-using Customer.Model.ErrorModels;
 using OrderCase.Model.Entities;
 using OrderCase.Model.ErrorModels;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
-using OrderCase.Services;
 
 namespace OrderCase.Services
 {
@@ -65,22 +60,22 @@ namespace OrderCase.Services
             _orderRepository.SoftDelete(guid,softDeleteDto);
         }
 
-        public async Task CustomerGetById(Guid id)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage responseMessage = await client.GetAsync($"api/customer/GetById/{id}");
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    var customer = await responseMessage.Content.ReadFromJsonAsync<CustomerModel>();
-                    var customerId = customer.Id;
-                 
-                }
-                else
-                {
-                    throw new CustomerException(HttpStatusCode.NotFound, "CustomerId bulunamadı");
-                }
-            }
-        }
+        // public async Task CustomerGetById(Guid id)
+        // {
+        //     using (HttpClient client = new HttpClient())
+        //     {
+        //         HttpResponseMessage responseMessage = await client.GetAsync($"api/customer/GetById/{id}");
+        //         if (responseMessage.IsSuccessStatusCode)
+        //         {
+        //             var customer = await responseMessage.Content.ReadFromJsonAsync<Customer.Model.Entities.Model>();
+        //             var customerId = customer.Id;
+        //          
+        //         }
+        //         else
+        //         {
+        //             throw new CustomerException(HttpStatusCode.NotFound, "CustomerId bulunamadı");
+        //         }
+        //     }
+        // }
     }
 }

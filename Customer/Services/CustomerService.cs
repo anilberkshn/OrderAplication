@@ -19,7 +19,7 @@ namespace Customer.Services
         }
 
 
-        public async Task<CustomerModel> GetByIdAsync(Guid id)
+        public async Task<Model.Entities.CustomerModel> GetByIdAsync(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
             
@@ -35,12 +35,12 @@ namespace Customer.Services
             return customer;
         }
 
-        public async Task<IEnumerable<CustomerModel>> GetAllAsync()
+        public async Task<IEnumerable<Model.Entities.CustomerModel>> GetAllAsync()
         {
             return await _customerRepository.GetAllAsync();
         }
 
-        public Task<Guid> InsertAsync(CustomerModel customerModel)
+        public Task<Guid> InsertAsync(Model.Entities.CustomerModel customerModel)
         {
             return _customerRepository.InsertAsync(customerModel);
         }

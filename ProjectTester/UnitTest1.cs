@@ -8,10 +8,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
 using Customer.Model;
-// using OrderCase.order.Model;
+// using OrderCase.order.CustomerModel;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-// using Customers = CustomerModel.Model.Entities.CustomerModel;
-// using Orders = Order.Model.Entities.CustomerModel;
+// using Customers = CustomerModel.CustomerModel.Entities.CustomerModel;
+// using Orders = Order.CustomerModel.Entities.CustomerModel;
 
 namespace ProjectTester
 {
@@ -51,7 +51,7 @@ namespace ProjectTester
             // {
             //     
             // };
-            // mockRepository.Setup(x => x.GetByIdAsync(customer.Id)).Returns(new OrderCase.Order.Model.Entities.Order()
+            // mockRepository.Setup(x => x.GetByIdAsync(customer.Id)).Returns(new OrderCase.Order.CustomerModel.Entities.Order()
             // {
             //     Id = customer.Id,
             //     Name = customer.Name,
@@ -63,7 +63,7 @@ namespace ProjectTester
             //     UpdatedTime = customer.UpdatedTime,
             //
             // });
-            // var CustomerService = new OrderCase.Order.Model.Entities.Order();
+            // var CustomerService = new OrderCase.Order.CustomerModel.Entities.Order();
         }
     }
 }
