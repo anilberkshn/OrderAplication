@@ -21,10 +21,5 @@
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Middlewares\" />
-      <Folder Include="Middleware\" />
-    </ItemGroup>
    
 </Project>
