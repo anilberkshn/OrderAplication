@@ -2,18 +2,18 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace OrderCase.Model.ErrorModels
+namespace Core.Model.ErrorModels
 {
-    [JsonObject (MemberSerialization.OptIn)]
-    public class OrderException: SystemException
+    [JsonObject(MemberSerialization.OptIn)]
+    public class CustomerException: SystemException
     {
-        
+        // Customer ve Order Aynı isimde bir exception tanımlanabilir mi? HttpStatus code gibi
         [JsonProperty]
         public HttpStatusCode StatusCode;
         [JsonProperty]
         public string ErrorMessage;
 
-        public OrderException(HttpStatusCode statusCode, string errorMessage)
+        public CustomerException(HttpStatusCode statusCode, string errorMessage)
         {
             StatusCode = statusCode;
             ErrorMessage = errorMessage;

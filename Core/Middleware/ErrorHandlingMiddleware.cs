@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Customer.Model.ErrorModels;
+using Core.Model.ErrorModels;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Customer.Middlewares
+namespace Core.Middleware
 {
     public class ErrorHandlingMiddleware
     {
@@ -23,7 +24,7 @@ namespace Customer.Middlewares
             {
                 await _next.Invoke(httpContext);
             }
-            catch (CustomerException e)
+            catch (OrderException e)
             {
                 httpContext.Response.ContentType = "application/json";
                 httpContext.Response.StatusCode = (int) e.StatusCode;

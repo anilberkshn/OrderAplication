@@ -1,8 +1,8 @@
 using System;
+using Core.Middleware;
 using Core.Model.Config;
 using Customer.Database.Context;
 using Customer.Database.Interface;
-using Customer.Middlewares;
 using Customer.Repository;
 using Customer.Services;
 using FluentValidation.AspNetCore;
@@ -34,6 +34,8 @@ namespace Customer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerModel", Version = "v1" });
+                // c.OperationFilter<SwaggerCustomize>();
+                c.DocumentFilter<MyRemoveQueryStringSwagger>();
             });
            
             var dbSettings = Configuration.GetSection("DatabaseSettings").Get<GenericDatabaseSettings>();
@@ -42,7 +44,7 @@ namespace Customer
             
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IContext, Context>(_ => context);
-            services.AddSingleton<ICustomerRepository, Repository.CustomerRepository>();
+            services.AddSingleton<ICustomerRepository,CustomerRepository>();
         }
         
         
@@ -52,7 +54,7 @@ namespace Customer
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CustomerModel v1"));
             }

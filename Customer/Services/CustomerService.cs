@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Core.Model.ErrorModels;
 using Customer.Model.Entities;
-using Customer.Model.ErrorModels;
 using Customer.Model.RequestModels;
 using Customer.Repository;
 
@@ -19,7 +19,7 @@ namespace Customer.Services
         }
 
 
-        public async Task<Model.Entities.CustomerModel> GetByIdAsync(Guid id)
+        public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
             
@@ -35,12 +35,12 @@ namespace Customer.Services
             return customer;
         }
 
-        public async Task<IEnumerable<Model.Entities.CustomerModel>> GetAllAsync()
+        public async Task<IEnumerable<CustomerModel>> GetAllAsync()
         {
             return await _customerRepository.GetAllAsync();
         }
 
-        public Task<Guid> InsertAsync(Model.Entities.CustomerModel customerModel)
+        public Task<Guid> InsertAsync(CustomerModel customerModel)
         {
             return _customerRepository.InsertAsync(customerModel);
         }

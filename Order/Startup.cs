@@ -1,4 +1,5 @@
 using System;
+using Core.Middleware;
 using Core.Model;
 using Core.Model.Config;
 using FluentValidation.AspNetCore;
@@ -11,9 +12,9 @@ using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using OrderCase.Database.Context;
 using OrderCase.Database.Interface;
-using OrderCase.Middlewares;
 using OrderCase.Repository;
 using OrderCase.Services;
+using ErrorHandlingMiddleware = Core.Middleware.ErrorHandlingMiddleware;
 
 namespace OrderCase
 {
@@ -51,7 +52,7 @@ namespace OrderCase
         {
             if (env.IsDevelopment())
             {             
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderModel v1"));
             }

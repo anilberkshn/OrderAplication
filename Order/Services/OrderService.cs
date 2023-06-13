@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Core.Model.ErrorModels;
 using OrderCase.Model.Entities;
-using OrderCase.Model.ErrorModels;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
 

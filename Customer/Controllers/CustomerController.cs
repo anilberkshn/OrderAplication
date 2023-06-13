@@ -24,7 +24,7 @@ namespace Customer.Controllers
         public async Task<IActionResult>CreateAsync([FromBody] CreateDto createDto)
         {
             var customer = new Model.Entities.CustomerModel()
-            {
+            { 
                 Name = createDto.Name,
                 Email = createDto.Email,
                 Address = createDto.Address,

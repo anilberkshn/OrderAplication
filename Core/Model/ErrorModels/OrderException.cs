@@ -2,10 +2,10 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace Customer.Model.ErrorModels
+namespace Core.Model.ErrorModels
 {
     [JsonObject (MemberSerialization.OptIn)]
-    public class CustomerException: SystemException
+    public class OrderException: SystemException
     {
         
         [JsonProperty]
@@ -13,7 +13,7 @@ namespace Customer.Model.ErrorModels
         [JsonProperty]
         public string ErrorMessage;
 
-        public CustomerException(HttpStatusCode statusCode, string errorMessage)
+        public OrderException(HttpStatusCode statusCode, string errorMessage)
         {
             StatusCode = statusCode;
             ErrorMessage = errorMessage;
