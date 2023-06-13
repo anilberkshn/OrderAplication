@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Customer.Database;
-using Customer.Database.Interface;
+using Core.Database;
+using Core.Database.Interface;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using MongoDB.Driver;
@@ -17,8 +17,8 @@ namespace Customer.Repository
 
         public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
-            var order = await FindOneAsync(x => x.Id == id);
-            return order;
+            var customerModel = await FindOneAsync(x => x.Id == id);
+            return customerModel;
         }
 
         public async Task<IEnumerable<CustomerModel>> GetAllAsync()
@@ -31,14 +31,15 @@ namespace Customer.Repository
             return await CreateAsync(customerModel);
         }
 
-        public void Update(Guid guid, UpdateDto updateDto)
+        public async Task<CustomerModel> Update(Guid id, UpdateDto updateDto)
         {
             var update = Builders<CustomerModel>.Update
                 .Set(x => x.Name, updateDto.Name)
                 .Set(x => x.Email, updateDto.Email)
                 .Set(x => x.Address, updateDto.Address);
                 
-            Update(x => x.Id == guid, update);
+            Update(x => x.Id == id, update);
+            return await GetByIdAsync(id);
         }
 
         public Guid Delete(Guid guid)

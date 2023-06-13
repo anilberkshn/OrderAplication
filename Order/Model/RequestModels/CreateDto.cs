@@ -1,4 +1,5 @@
 using System;
+using Core.Model.Entities;
 using OrderCase.Model.Entities;
 
 namespace OrderCase.Model.RequestModels

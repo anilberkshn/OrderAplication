@@ -1,3 +1,4 @@
+using Core.Model.Entities;
 using Customer.Model.Entities;
 using FluentValidation;
 

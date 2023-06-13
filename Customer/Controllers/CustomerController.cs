@@ -66,7 +66,8 @@ namespace Customer.Controllers
         {
             var customer = await _customerService.GetByIdAsync(id);
             _customerService.Update(id, updateDto);
-            return Ok(customer);
+            var update = await _customerService.GetByIdAsync(id);
+            return Ok(update);
         }
 
 

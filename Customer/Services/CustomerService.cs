@@ -25,11 +25,11 @@ namespace Customer.Services
             
             if (customer == null)
             {
-                throw new CustomerException(HttpStatusCode.NotFound,"Müşteri bulunamadı.");
+                throw new CustomException(HttpStatusCode.NotFound,"Müşteri bulunamadı.");
             }                   
             if (customer.IsDeleted)    
             {
-                throw new CustomerException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
+                throw new CustomException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
             }
             
             return customer;

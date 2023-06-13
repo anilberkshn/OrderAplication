@@ -24,7 +24,7 @@ namespace Core.Middleware
             {
                 await _next.Invoke(httpContext);
             }
-            catch (OrderException e)
+            catch (CustomException e)
             {
                 httpContext.Response.ContentType = "application/json";
                 httpContext.Response.StatusCode = (int) e.StatusCode;

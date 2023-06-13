@@ -36,7 +36,7 @@ namespace Core.Database
 
         public async Task<IEnumerable<T>> FindAllAsync()
         {
-            var record = _collection.AsQueryable().AsEnumerable();
+            var record = await _collection.AsQueryable().ToListAsync();
             return record;
         }
 

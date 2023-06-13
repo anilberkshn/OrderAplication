@@ -1,8 +1,8 @@
 using System;
+using Core.Database.Context;
+using Core.Database.Interface;
 using Core.Middleware;
 using Core.Model.Config;
-using Customer.Database.Context;
-using Customer.Database.Interface;
 using Customer.Repository;
 using Customer.Services;
 using FluentValidation.AspNetCore;

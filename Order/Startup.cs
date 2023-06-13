@@ -1,6 +1,6 @@
 using System;
-using Core.Middleware;
-using Core.Model;
+using Core.Database.Context;
+using Core.Database.Interface;
 using Core.Model.Config;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -10,8 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using OrderCase.Database.Context;
-using OrderCase.Database.Interface;
 using OrderCase.Repository;
 using OrderCase.Services;
 using ErrorHandlingMiddleware = Core.Middleware.ErrorHandlingMiddleware;
@@ -44,6 +42,7 @@ namespace OrderCase
             services.AddSingleton<IOrderService, OrderCase.Services.OrderService>();
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<IOrderRepository, Repository.OrderRepository>();
+     
 
         }
 

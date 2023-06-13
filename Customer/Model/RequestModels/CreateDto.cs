@@ -1,4 +1,5 @@
 using System;
+using Core.Model.Entities;
 using Customer.Model.Entities;
 
 namespace Customer.Model.RequestModels

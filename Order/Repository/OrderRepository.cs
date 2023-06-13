@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Database;
+using Core.Database.Interface;
 using MongoDB.Driver;
-using OrderCase.Database;
-using OrderCase.Database.Interface;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
 

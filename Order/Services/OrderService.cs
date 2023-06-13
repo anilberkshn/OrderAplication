@@ -25,11 +25,11 @@ namespace OrderCase.Services
             
             if (order == null)
             {
-               throw new OrderException(HttpStatusCode.NotFound,"Sipariş bulunamadı.");
+               throw new CustomException(HttpStatusCode.NotFound,"Sipariş bulunamadı.");
             }                   
             if (order.IsDeleted)    
             {
-                throw new OrderException(HttpStatusCode.NotFound, "Sipariş bulunamadı.");
+                throw new CustomException(HttpStatusCode.NotFound, "Sipariş bulunamadı.");
             }
             
             return order;

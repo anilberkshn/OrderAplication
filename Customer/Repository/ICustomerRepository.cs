@@ -11,7 +11,7 @@ namespace Customer.Repository
         public Task<CustomerModel> GetByIdAsync(Guid id);
         public Task<IEnumerable<CustomerModel>> GetAllAsync();
         public Task<Guid> InsertAsync(CustomerModel customerModel);
-        public void Update(Guid guid, UpdateDto updateDto);
+        public Task<CustomerModel> Update(Guid id, UpdateDto updateDto);
         public Guid Delete(Guid guid);
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto);
     }
