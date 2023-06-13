@@ -38,7 +38,6 @@ namespace OrderCase.Repository
                 .Set(x => x.Quantity, updateDto.Quantity)
                 .Set(x => x.Price, updateDto.Price)
                 .Set(x => x.Status, updateDto.Status)
-                .Set(x => x.Address, updateDto.Address)
                 .Set(x => x.Product, updateDto.Type);
 
             Update(x => x.Id == guid, update);

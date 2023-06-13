@@ -1,5 +1,6 @@
 using System;
 using Core.Model.Entities;
+using Domain.Entities;
 
 namespace Customer.Model.Entities
 {

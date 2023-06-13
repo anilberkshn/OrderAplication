@@ -1,4 +1,4 @@
-namespace Core.Model.Entities
+namespace Domain.Entities
 {
     public class Address
     {

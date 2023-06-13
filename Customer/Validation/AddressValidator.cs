@@ -1,5 +1,6 @@
 using Core.Model.Entities;
 using Customer.Model.Entities;
+using Domain.Entities;
 using FluentValidation;
 
 namespace Customer.Validation

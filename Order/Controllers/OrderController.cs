@@ -28,7 +28,6 @@ namespace OrderCase.Controllers
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
                 Price = createDto.Price,
-                Address = createDto.Address,
                 Product = createDto.Product
             };
 
@@ -41,14 +40,14 @@ namespace OrderCase.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetById")] 
+        [HttpGet("{id}")] 
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var findOne = await _orderService.GetByIdAsync(id);
             return Ok(findOne);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("All")]
         // [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

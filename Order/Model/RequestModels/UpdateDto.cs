@@ -10,7 +10,6 @@ namespace OrderCase.Model.RequestModels
         public int Quantity { get; set; }
         public double Price { get; set; }
         public string Status { get; set; }
-        public Address Address { get; set; }
         public Product Type { get; set; }
     }
 }

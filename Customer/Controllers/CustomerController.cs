@@ -39,14 +39,14 @@ namespace Customer.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var findOne = await _customerService.GetByIdAsync(id);
             return Ok(findOne);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("All")]
         public async Task<IActionResult> GetAllAsync()
         {
             var getAll = await _customerService.GetAllAsync();

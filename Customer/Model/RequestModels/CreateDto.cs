@@ -1,6 +1,4 @@
-using System;
-using Core.Model.Entities;
-using Customer.Model.Entities;
+using Domain.Entities;
 
 namespace Customer.Model.RequestModels
 {
