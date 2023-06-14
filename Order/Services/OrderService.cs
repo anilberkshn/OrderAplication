@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
+using Core.Model.RequestModel;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
@@ -39,15 +40,29 @@ namespace OrderCase.Services
         {
             return  await _orderRepository.GetAllAsync();
         }
+      
+        public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
+        {
+            if (getAllDto.skip < 0)
+            {
+                throw new CustomException(HttpStatusCode.BadRequest, "Skip cannot negative");
+            }
+
+            if (getAllDto.take is > 100 or < 0)
+            {
+                throw new CustomException(HttpStatusCode.BadRequest, "TooManyRequest or cannot negative");
+            }
+            return await _orderRepository.GetAllSkipTakeAsync(getAllDto);
+        }
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
             return await _orderRepository.InsertAsync(orderModel);
         }
 
-        public void Update(Guid guid, UpdateDto updateDto)
+        public async Task<OrderModel> Update(Guid guid, UpdateDto updateDto)
         {
-            _orderRepository.Update(guid,updateDto);
+            return await _orderRepository.Update(guid,updateDto);
         }
 
         public Guid Delete(Guid guid)

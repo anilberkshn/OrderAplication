@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Database;
 using Core.Database.Interface;
+using Core.Model.RequestModel;
 using MongoDB.Driver;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
@@ -26,13 +27,17 @@ namespace OrderCase.Repository
         {
             return await FindAllAsync();
         }
+        public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
+        {
+            return await FindAllSkipTakeAsync(getAllDto);
+        }
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
             return await CreateAsync(orderModel);
         }
 
-        public void Update(Guid guid, UpdateDto updateDto)
+        public async Task<OrderModel> Update(Guid id, UpdateDto updateDto)
         {
             var update = Builders<OrderModel>.Update
                 .Set(x => x.Quantity, updateDto.Quantity)
@@ -40,7 +45,8 @@ namespace OrderCase.Repository
                 .Set(x => x.Status, updateDto.Status)
                 .Set(x => x.Product, updateDto.Type);
 
-            Update(x => x.Id == guid, update);
+            Update(x => x.Id == id, update);
+            return await GetByIdAsync(id);
         }
 
         public Guid Delete(Guid guid)

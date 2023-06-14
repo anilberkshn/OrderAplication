@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Model.RequestModel;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 
@@ -11,8 +12,9 @@ namespace Customer.Services
         public Task<CustomerModel> GetByIdAsync(Guid id);
         
         public Task<IEnumerable<CustomerModel>> GetAllAsync();
+        public Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto);
         public Task<Guid> InsertAsync(CustomerModel customerModel);
-        public void Update(Guid guid, UpdateDto updateDto);
+        public Task<CustomerModel> Update(Guid guid, UpdateDto updateDto);
         public Guid Delete(Guid guid);
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto);
     }

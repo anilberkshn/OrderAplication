@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Database;
 using Core.Database.Interface;
+using Core.Model.RequestModel;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using MongoDB.Driver;
@@ -24,6 +25,10 @@ namespace Customer.Repository
         public async Task<IEnumerable<CustomerModel>> GetAllAsync()
         {
             return await FindAllAsync();
+        }  
+        public async Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
+        {
+            return await FindAllSkipTakeAsync(getAllDto);
         }
 
         public async Task<Guid> InsertAsync(CustomerModel customerModel)

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Core.Model.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 using OrderCase.Model;
 using OrderCase.Model.Entities;
@@ -48,12 +49,20 @@ namespace OrderCase.Controllers
         }
 
         [HttpGet("All")]
-        // [Microsoft.AspNetCore.Mvc.HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var getAll =  await _orderService.GetAllAsync();
             return Ok(getAll);
         }
+        
+
+        [HttpGet("AllWithSkipTake")]
+        public async Task<IActionResult> GetAllSkipTakeAsync([FromQuery]GetAllDto getAllDto)
+        {
+            var getAll = await _orderService.GetAllSkipTakeAsync(getAllDto);
+            return Ok(getAll);
+        }
+
 
         [HttpDelete("HardDelete")]
         public async Task<IActionResult> HardDeleteAsync(Guid id)
@@ -66,9 +75,7 @@ namespace OrderCase.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
-            var order = await _orderService.GetByIdAsync(id);
-            _orderService.Update(id, updateDto);
-            return Ok(order);
+            return Ok( await _orderService.Update(id, updateDto));
         }
 
         [HttpPut("SoftDelete")]

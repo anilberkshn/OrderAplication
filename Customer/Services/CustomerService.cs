@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
+using Core.Model.RequestModel;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using Customer.Repository;
@@ -39,15 +40,28 @@ namespace Customer.Services
         {
             return await _customerRepository.GetAllAsync();
         }
+        public async Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
+        {
+            if (getAllDto.skip < 0)
+            {
+                throw new CustomException(HttpStatusCode.BadRequest, "Skip cannot negative");
+            }
+
+            if (getAllDto.take is > 100 or < 0)
+            {
+                throw new CustomException(HttpStatusCode.BadRequest, "TooManyRequest or cannot negative");
+            }
+            return await _customerRepository.GetAllSkipTakeAsync(getAllDto);
+        }
 
         public Task<Guid> InsertAsync(CustomerModel customerModel)
         {
             return _customerRepository.InsertAsync(customerModel);
         }
 
-        public void Update(Guid guid, UpdateDto updateDto)
+        public async Task<CustomerModel> Update(Guid guid, UpdateDto updateDto)
         {
-            _customerRepository.Update(guid,updateDto);
+            return await _customerRepository.Update(guid,updateDto);
         }
 
         public Guid Delete(Guid guid)

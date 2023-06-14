@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Core.Model.RequestModel;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using Customer.Model.Response;
@@ -51,6 +52,13 @@ namespace Customer.Controllers
         {
             var getAll = await _customerService.GetAllAsync();
             return Ok(getAll);
+        } 
+        
+        [HttpGet("AllWithSkipTake")]
+        public async Task<IActionResult> GetAllSkipTakeAsync([FromQuery]GetAllDto getAllDto)
+        {
+            var getAll = await _customerService.GetAllSkipTakeAsync(getAllDto);
+            return Ok(getAll);
         }
 
         [HttpDelete("HardDelete")]
@@ -64,10 +72,7 @@ namespace Customer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
-            var customer = await _customerService.GetByIdAsync(id);
-            _customerService.Update(id, updateDto);
-            var update = await _customerService.GetByIdAsync(id);
-            return Ok(update);
+           return Ok(await _customerService.Update(id, updateDto));
         }
 
 
