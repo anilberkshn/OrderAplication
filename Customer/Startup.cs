@@ -34,8 +34,6 @@ namespace Customer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerModel", Version = "v1" });
-                // c.OperationFilter<SwaggerCustomize>();
-                c.DocumentFilter<MyRemoveQueryStringSwagger>();
             });
            
             var dbSettings = Configuration.GetSection("DatabaseSettings").Get<GenericDatabaseSettings>();

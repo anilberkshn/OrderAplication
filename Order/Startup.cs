@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using OrderCase.HttpClient;
 using OrderCase.Repository;
 using OrderCase.Services;
 using ErrorHandlingMiddleware = Core.Middleware.ErrorHandlingMiddleware;
@@ -42,6 +43,7 @@ namespace OrderCase
             services.AddSingleton<IOrderService, OrderCase.Services.OrderService>();
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<IOrderRepository, Repository.OrderRepository>();
+            services.AddSingleton<IOrderHttpClient, OrderHttpClient>();
      
 
         }

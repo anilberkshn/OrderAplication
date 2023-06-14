@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
+using OrderCase.HttpClient;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
@@ -13,10 +14,13 @@ namespace OrderCase.Services
     public class OrderService: IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderHttpClient _orderHttpClient;
         
-        public OrderService(IOrderRepository orderRepository)
-        { 
+        
+        public OrderService(IOrderRepository orderRepository, IOrderHttpClient orderHttpClient)
+        {
             _orderRepository = orderRepository;
+            _orderHttpClient = orderHttpClient;
         }
 
 
@@ -57,6 +61,7 @@ namespace OrderCase.Services
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
+            //_orderHttpClient.
             return await _orderRepository.InsertAsync(orderModel);
         }
 
@@ -74,23 +79,5 @@ namespace OrderCase.Services
         {
             _orderRepository.SoftDelete(guid,softDeleteDto);
         }
-
-        // public async Task CustomerGetById(Guid id)
-        // {
-        //     using (HttpClient client = new HttpClient())
-        //     {
-        //         HttpResponseMessage responseMessage = await client.GetAsync($"api/customer/GetById/{id}");
-        //         if (responseMessage.IsSuccessStatusCode)
-        //         {
-        //             var customer = await responseMessage.Content.ReadFromJsonAsync<Customer.Model.Entities.Model>();
-        //             var customerId = customer.Id;
-        //          
-        //         }
-        //         else
-        //         {
-        //             throw new CustomerException(HttpStatusCode.NotFound, "CustomerId bulunamadı");
-        //         }
-        //     }
-        // }
     }
 }
