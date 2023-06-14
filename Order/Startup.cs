@@ -30,6 +30,7 @@ namespace OrderCase
         [Obsolete("Obsolete")]
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();   
             services.AddControllers().AddFluentValidation(fv=> fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
             {

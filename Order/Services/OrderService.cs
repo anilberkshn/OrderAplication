@@ -61,7 +61,12 @@ namespace OrderCase.Services
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
-            //_orderHttpClient.
+            var customerId = await _orderHttpClient.GetCustomerFromCustomerApi(orderModel.CustomerId);
+            if (customerId == Guid.Empty && customerId != orderModel.CustomerId)
+            {
+                throw new CustomException(HttpStatusCode.NotFound, "CustomerId bulunamadı. ");
+            }
+
             return await _orderRepository.InsertAsync(orderModel);
         }
 

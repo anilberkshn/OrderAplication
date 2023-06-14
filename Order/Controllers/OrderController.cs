@@ -1,7 +1,10 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
+using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
 using Microsoft.AspNetCore.Mvc;
+using OrderCase.HttpClient;
 using OrderCase.Model;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
@@ -15,8 +18,7 @@ namespace OrderCase.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IOrderHttpClient orderHttpClient)
         {
             _orderService = orderService;
         }
@@ -24,7 +26,7 @@ namespace OrderCase.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateDto createDto)
         {
-            var order = new OrderModel()
+           var order = new OrderModel()
             {
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
@@ -43,6 +45,13 @@ namespace OrderCase.Controllers
 
         [HttpGet("{id}")] 
         public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var findOne = await _orderService.GetByIdAsync(id);
+            return Ok(findOne);
+        }
+        
+        [HttpGet("http/{id}")] 
+        public async Task<IActionResult> GetHttpClient(Guid id)
         {
             var findOne = await _orderService.GetByIdAsync(id);
             return Ok(findOne);
