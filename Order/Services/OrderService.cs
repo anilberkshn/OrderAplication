@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
-using OrderCase.HttpClient;
+using OrderCase.Clients;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
@@ -14,13 +14,13 @@ namespace OrderCase.Services
     public class OrderService: IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrderHttpClient _orderHttpClient;
+        private readonly ICustomerHttpClient _customerHttpClient;
         
         
-        public OrderService(IOrderRepository orderRepository, IOrderHttpClient orderHttpClient)
+        public OrderService(IOrderRepository orderRepository, ICustomerHttpClient customerHttpClient)
         {
             _orderRepository = orderRepository;
-            _orderHttpClient = orderHttpClient;
+            _customerHttpClient = customerHttpClient;
         }
 
 
@@ -61,8 +61,8 @@ namespace OrderCase.Services
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
-            var customerId = await _orderHttpClient.GetCustomerFromCustomerApi(orderModel.CustomerId);
-            if (customerId == Guid.Empty && customerId != orderModel.CustomerId)
+            var exist = await _customerHttpClient.GetCustomerFromCustomerApi(orderModel.CustomerId);
+            if (!exist)
             {
                 throw new CustomException(HttpStatusCode.NotFound, "CustomerId bulunamadı. ");
             }

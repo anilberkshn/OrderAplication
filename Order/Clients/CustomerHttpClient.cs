@@ -1,45 +1,29 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using OrderCase.Model.Entities;
-using OrderCase.Services;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace OrderCase.HttpClient
+namespace OrderCase.Clients
 {
-    public class OrderHttpClient : IOrderHttpClient
+    public class CustomerHttpClient : ICustomerHttpClient
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly System.Net.Http.HttpClient _httpClient;
-        // private readonly ICustomerService _customerService;
-
-        public OrderHttpClient(IHttpClientFactory httpClientFactory)
+        private readonly HttpClient _httpClient;
+        public CustomerHttpClient(HttpClient httpClient)
         {
-            _httpClientFactory = httpClientFactory;
-            _httpClient = httpClientFactory.CreateClient();
+            _httpClient = httpClient;
         }
         
-        
-        public async Task<Guid> GetCustomerFromCustomerApi(Guid customerId) // Guid yanlış ama doğru mantık nasıl
+        public async Task<bool> GetCustomerFromCustomerApi(Guid customerId) // Guid yanlış ama doğru mantık nasıl
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("http://localhost:5010/api/customers/{customerId}");
-            // response.
+           var response = await _httpClient.GetAsync($"api/customers/{customerId}");
+            
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
-                var customer = JsonSerializer.Deserialize<Guid>(json);
-                return customer;
+                 return true;
             }
             else
             {
-                return Guid.Empty;
+                return false;
             }
 
         }

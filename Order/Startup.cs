@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http.Headers;
 using Core.Database.Context;
 using Core.Database.Interface;
 using Core.Model.Config;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using OrderCase.HttpClient;
+using OrderCase.Clients;
 using OrderCase.Repository;
 using OrderCase.Services;
 using ErrorHandlingMiddleware = Core.Middleware.ErrorHandlingMiddleware;
@@ -30,7 +31,13 @@ namespace OrderCase
         [Obsolete("Obsolete")]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient();   
+
+            services.AddScoped<ICustomerHttpClient>(sp =>sp.GetRequiredService<CustomerHttpClient>());
+            services.AddHttpClient<CustomerHttpClient>((sp, http) =>
+            {
+                http.BaseAddress = new Uri("http://localhost:5010/");
+                http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
             services.AddControllers().AddFluentValidation(fv=> fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
             {
@@ -41,12 +48,10 @@ namespace OrderCase
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
-            services.AddSingleton<IOrderService, OrderCase.Services.OrderService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddSingleton<IContext, Context>(_ => context);
-            services.AddSingleton<IOrderRepository, Repository.OrderRepository>();
-            services.AddSingleton<IOrderHttpClient, OrderHttpClient>();
-     
-
+            services.AddSingleton<IOrderRepository, OrderRepository>();
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
 using Microsoft.AspNetCore.Mvc;
-using OrderCase.HttpClient;
+using OrderCase.Clients;
 using OrderCase.Model;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
@@ -18,7 +18,7 @@ namespace OrderCase.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService, IOrderHttpClient orderHttpClient)
+        public OrderController(IOrderService orderService, ICustomerHttpClient customerHttpClient)
         {
             _orderService = orderService;
         }
