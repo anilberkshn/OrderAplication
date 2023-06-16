@@ -29,7 +29,7 @@ namespace OrderCase.Repository
         }
         public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {
-            return await FindAllSkipTakeAsync(getAllDto);
+            return await GetManyAsync(getAllDto);
         }
 
         public async Task<Guid> InsertAsync(OrderModel orderModel)

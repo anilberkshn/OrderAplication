@@ -28,7 +28,7 @@ namespace Customer.Repository
         }  
         public async Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {
-            return await FindAllSkipTakeAsync(getAllDto);
+            return await GetManyAsync(getAllDto);
         }
 
         public async Task<Guid> InsertAsync(CustomerModel customerModel)

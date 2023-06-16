@@ -7,6 +7,7 @@ using Core.Database.Interface;
 using Core.Model;
 using Core.Model.Entities;
 using Core.Model.RequestModel;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Core.Database
@@ -45,6 +46,16 @@ namespace Core.Database
         {
             var record = await _collection.AsQueryable().ToListAsync();
             return record.Skip(getAllDto.skip).Take(getAllDto.take);
+        }
+        public async Task<IEnumerable<T>> GetManyAsync(GetAllDto getAllDto)
+        {
+           var filter = Builders<T>.Filter.Eq(x => x.IsDeleted, false);
+           var result = await _collection
+               .Find(filter)
+               .Skip(getAllDto.skip)
+               .Limit(getAllDto.take)
+               .ToListAsync();
+            return result;
         }
 
         public async Task<T> FindOneAsync(Expression<Func<T, bool>> expression)
