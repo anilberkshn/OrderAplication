@@ -1,6 +1,9 @@
 using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Core.Model.ErrorModels;
 using OrderCase.Model.Entities;
 
 namespace OrderCase.Clients
@@ -13,19 +16,19 @@ namespace OrderCase.Clients
             _httpClient = httpClient;
         }
         
-        public async Task<bool> GetCustomerFromCustomerApi(Guid customerId) // Guid yanlış ama doğru mantık nasıl
+        public async Task<CustomerClientModel> GetCustomerFromCustomerApi(Guid customerId)
         {
-           var response = await _httpClient.GetAsync($"api/customers/{customerId}");
-            
+            var response = await _httpClient.GetAsync($"api/customers/{customerId}");
             if (response.IsSuccessStatusCode)
             {
-                 return true;
+                var customer = await response.Content.ReadFromJsonAsync<CustomerClientModel>();
+                return customer;
             }
             else
             {
-                return false;
+                throw new CustomException(HttpStatusCode.NotFound, "Customer bulunamadı");
             }
-
+           
         }
 
         public Task<OrderModel> CheckCustomerIdOrderModel(Guid id)
@@ -33,9 +36,17 @@ namespace OrderCase.Clients
             throw new NotImplementedException();
         }
 
-        public Task<bool> CheckCustomerId(Guid id)
+        public async Task<bool> CheckCustomerId(Guid customerId)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"api/customers/{customerId}");
+            
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+            
+
         }
         // public Task<OrderModel> CheckCustomerIdOrderModel(Guid id)
         // {

@@ -1,7 +1,5 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
-using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 using OrderCase.Clients;
@@ -12,12 +10,12 @@ using OrderCase.Services;
 
 namespace OrderCase.Controllers
 {
-    
     [ApiController]
     [Route("api/orders")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+
         public OrderController(IOrderService orderService, ICustomerHttpClient customerHttpClient)
         {
             _orderService = orderService;
@@ -26,7 +24,7 @@ namespace OrderCase.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateDto createDto)
         {
-           var order = new OrderModel()
+            var order = new OrderModel()
             {
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
@@ -43,15 +41,8 @@ namespace OrderCase.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")] 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
-        {
-            var findOne = await _orderService.GetByIdAsync(id);
-            return Ok(findOne);
-        }
-        
-        [HttpGet("http/{id}")] 
-        public async Task<IActionResult> GetHttpClient(Guid id)
         {
             var findOne = await _orderService.GetByIdAsync(id);
             return Ok(findOne);
@@ -60,13 +51,12 @@ namespace OrderCase.Controllers
         [HttpGet("All")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var getAll =  await _orderService.GetAllAsync();
+            var getAll = await _orderService.GetAllAsync();
             return Ok(getAll);
         }
-        
 
         [HttpGet("AllWithSkipTake")]
-        public async Task<IActionResult> GetAllSkipTakeAsync([FromQuery]GetAllDto getAllDto)
+        public async Task<IActionResult> GetAllSkipTakeAsync([FromQuery] GetAllDto getAllDto)
         {
             var getAll = await _orderService.GetAllSkipTakeAsync(getAllDto);
             return Ok(getAll);
@@ -84,11 +74,11 @@ namespace OrderCase.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
-            return Ok( await _orderService.Update(id, updateDto));
+            return Ok(await _orderService.Update(id, updateDto));
         }
 
         [HttpPut("SoftDelete")]
-        public async Task<IActionResult>SoftDeleteAsync(Guid id, [FromBody] SoftDeleteDto softDeleteDto)
+        public async Task<IActionResult> SoftDeleteAsync(Guid id, [FromBody] SoftDeleteDto softDeleteDto)
         {
             var order = await _orderService.GetByIdAsync(id);
             _orderService.SoftDelete(order.Id, softDeleteDto);

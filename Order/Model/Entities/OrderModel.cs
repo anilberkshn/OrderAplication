@@ -1,6 +1,7 @@
 using System;
 using Core.Model;
 using Core.Model.Entities;
+using Domain.Entities;
 using Newtonsoft.Json;
 
 namespace OrderCase.Model.Entities
@@ -12,6 +13,8 @@ namespace OrderCase.Model.Entities
         public double Price { get; set; }
         public string Status { get; set; }
         public Product Product { get; set; }
+
+        public Address Address { get; set; }
         
 
     }

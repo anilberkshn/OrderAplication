@@ -6,8 +6,8 @@ namespace OrderCase.Clients
 {
     public interface ICustomerHttpClient
     {
-        public Task<bool> GetCustomerFromCustomerApi(Guid customerId);
+        public Task<CustomerClientModel> GetCustomerFromCustomerApi(Guid customerId);
         public Task<OrderModel> CheckCustomerIdOrderModel(Guid id);
-        public Task <bool> CheckCustomerId(Guid id);
+        public Task <bool> CheckCustomerId(Guid customerId);
     }
 }
