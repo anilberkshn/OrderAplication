@@ -49,19 +49,29 @@ namespace OrderCase.Repository
             return await GetByIdAsync(id);
         }
 
-        public Guid Delete(Guid guid)
+        public Guid Delete(Guid id)
         {
-          return  Delete(x => x.Id == guid);
+          return  Delete(x => x.Id == id);
         }
 
-        public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto)
+        public void SoftDelete(Guid id, SoftDeleteDto softDeleteDto)
         {
             var softDelete  = Builders<OrderModel>.Update
                     .Set(x => x.DeleteTime, softDeleteDto.DeletedTime)
                     .Set(x => x.IsDeleted, softDeleteDto.IsDeleted)
                 ;
 
-            SoftDelete(x => x.Id == guid, softDelete);
+            SoftDelete(x => x.Id == id, softDelete);
+        }
+        
+        public StatusDto ChangeStatus(Guid id, StatusDto statusDto)
+        {
+            var status  = Builders<OrderModel>.Update
+                    .Set(x => x.Status, statusDto.Status)
+                    ;
+
+            Update(x => x.Id == id, status);
+            return statusDto;
         }
     }
 }

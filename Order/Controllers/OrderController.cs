@@ -84,5 +84,12 @@ namespace OrderCase.Controllers
             _orderService.SoftDelete(order.Id, softDeleteDto);
             return Ok(id);
         }
+        [HttpPut("ChangeStatus")]
+        public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] StatusDto statusDto)
+        {
+            var order = await _orderService.GetByIdAsync(id);
+            _orderService.ChangeStatus(order.Id, statusDto);
+            return Ok(id);
+        }
     }
 }

@@ -84,5 +84,9 @@ namespace OrderCase.Services
         {
             _orderRepository.SoftDelete(guid,softDeleteDto);
         }
+        public StatusDto ChangeStatus(Guid id, StatusDto statusDto)
+        {
+           return _orderRepository.ChangeStatus(id, statusDto);
+        }
     }
 }
