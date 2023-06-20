@@ -16,12 +16,12 @@ namespace OrderCase.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly IMessageProducer _messagePublisher;
+        
 
         public OrderController(IOrderService orderService,IMessageProducer messagePublisher)
         {
             _orderService = orderService;
-            _messagePublisher = messagePublisher;
+            
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace OrderCase.Controllers
                 Id = order.Id
             };
             
-            _messagePublisher.SendMessage(order);
+            
             return Ok(response);
         }
 
@@ -73,7 +73,7 @@ namespace OrderCase.Controllers
         {
             var byId = await _orderService.GetByIdAsync(id);
             _orderService.Delete(byId.Id);
-            _messagePublisher.SendMessage(byId);
+            
             return Ok(id);
         }
 
@@ -81,7 +81,6 @@ namespace OrderCase.Controllers
         public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
             var result = await _orderService.Update(id, updateDto);
-            _messagePublisher.SendMessage(result);
             return Ok(result);
         }
 
@@ -90,7 +89,7 @@ namespace OrderCase.Controllers
         {
             var order = await _orderService.GetByIdAsync(id);
             _orderService.SoftDelete(order.Id, softDeleteDto);
-            _messagePublisher.SendMessage(softDeleteDto);
+            
             return Ok(id);
         }
         [HttpPut("ChangeStatus")]
@@ -98,8 +97,7 @@ namespace OrderCase.Controllers
         {
             var order = await _orderService.GetByIdAsync(id);
             var orderResult=  _orderService.ChangeStatus(order.Id, statusDto);
-            _messagePublisher.SendMessage(orderResult);
-            return Ok(id);
+           return Ok(id);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Core.Model.ErrorModels;
 using Core.Model.RequestModel;
 using OrderCase.Clients;
+using OrderCase.MessageQ;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
 using OrderCase.Repository;
@@ -15,13 +16,15 @@ namespace OrderCase.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICustomerHttpClient _customerHttpClient;
+        private readonly IMessageProducer _messagePublisher;
         
         
         
-        public OrderService(IOrderRepository orderRepository, ICustomerHttpClient customerHttpClient)
+        public OrderService(IOrderRepository orderRepository, ICustomerHttpClient customerHttpClient, IMessageProducer messagePublisher)
         {
             _orderRepository = orderRepository;
             _customerHttpClient = customerHttpClient;
+            _messagePublisher = messagePublisher;
         }
 
 
@@ -60,26 +63,32 @@ namespace OrderCase.Services
             }
             orderModel.Address = customer.Address;
             
+            _messagePublisher.SendMessage(orderModel);
             
             return await _orderRepository.InsertAsync(orderModel);
         }
 
         public async Task<OrderModel> Update(Guid guid, UpdateDto updateDto)
         {
-            return await _orderRepository.Update(guid,updateDto);
+            var result = await _orderRepository.Update(guid, updateDto);
+            _messagePublisher.SendMessage(result);
+            return result;
         }
 
         public Guid Delete(Guid guid)
         {
+            _messagePublisher.SendMessage(guid);
             return _orderRepository.Delete(guid);
         }
 
         public void SoftDelete(Guid guid,SoftDeleteDto softDeleteDto)
         {
+            _messagePublisher.SendMessage(softDeleteDto);
             _orderRepository.SoftDelete(guid,softDeleteDto);
         }
         public StatusDto ChangeStatus(Guid id, StatusDto statusDto)
         {
+           _messagePublisher.SendMessage(statusDto);
            return _orderRepository.ChangeStatus(id, statusDto);
         }
     }
