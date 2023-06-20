@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.Model.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 using OrderCase.Clients;
+using OrderCase.MessageQ;
 using OrderCase.Model;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
@@ -15,10 +16,12 @@ namespace OrderCase.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IMessageProducer _messagePublisher;
 
-        public OrderController(IOrderService orderService, ICustomerHttpClient customerHttpClient)
+        public OrderController(IOrderService orderService,IMessageProducer messagePublisher)
         {
             _orderService = orderService;
+            _messagePublisher = messagePublisher;
         }
 
         [HttpPost]
@@ -38,6 +41,8 @@ namespace OrderCase.Controllers
             {
                 Id = order.Id
             };
+            
+            _messagePublisher.SendMessage(order);
             return Ok(response);
         }
 
@@ -68,13 +73,16 @@ namespace OrderCase.Controllers
         {
             var byId = await _orderService.GetByIdAsync(id);
             _orderService.Delete(byId.Id);
+            _messagePublisher.SendMessage(byId);
             return Ok(id);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
-            return Ok(await _orderService.Update(id, updateDto));
+            var result = await _orderService.Update(id, updateDto);
+            _messagePublisher.SendMessage(result);
+            return Ok(result);
         }
 
         [HttpPut("SoftDelete")]
@@ -82,13 +90,15 @@ namespace OrderCase.Controllers
         {
             var order = await _orderService.GetByIdAsync(id);
             _orderService.SoftDelete(order.Id, softDeleteDto);
+            _messagePublisher.SendMessage(softDeleteDto);
             return Ok(id);
         }
         [HttpPut("ChangeStatus")]
         public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] StatusDto statusDto)
         {
             var order = await _orderService.GetByIdAsync(id);
-            _orderService.ChangeStatus(order.Id, statusDto);
+            var orderResult=  _orderService.ChangeStatus(order.Id, statusDto);
+            _messagePublisher.SendMessage(orderResult);
             return Ok(id);
         }
     }

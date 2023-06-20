@@ -42,12 +42,12 @@ namespace Customer.Services
         }
         public async Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {
-            if (getAllDto.skip < 0)
+            if (getAllDto.Skip < 0)
             {
                 throw new CustomException(HttpStatusCode.BadRequest, "Skip cannot negative");
             }
 
-            if (getAllDto.take is > 100 or < 0)
+            if (getAllDto.Take is > 100 or < 0)
             {
                 throw new CustomException(HttpStatusCode.BadRequest, "TooManyRequest or cannot negative");
             }

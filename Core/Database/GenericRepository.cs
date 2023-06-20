@@ -44,16 +44,16 @@ namespace Core.Database
 
         public async Task<IEnumerable<T>> FindAllSkipTakeAsync(GetAllDto getAllDto)
         {
-            var record = await _collection.AsQueryable().ToListAsync();
-            return record.Skip(getAllDto.skip).Take(getAllDto.take);
+            var record = _collection.AsQueryable().Skip(getAllDto.Skip).Take(getAllDto.Take);
+            return await Task.Run(() => record.ToList());
         }
         public async Task<IEnumerable<T>> GetManyAsync(GetAllDto getAllDto)
         {
            var filter = Builders<T>.Filter.Eq(x => x.IsDeleted, false);
            var result = await _collection
                .Find(filter)
-               .Skip(getAllDto.skip)
-               .Limit(getAllDto.take)
+               .Skip(getAllDto.Skip)
+               .Limit(getAllDto.Take)
                .ToListAsync();
             return result;
         }

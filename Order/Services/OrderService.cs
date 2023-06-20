@@ -17,6 +17,7 @@ namespace OrderCase.Services
         private readonly ICustomerHttpClient _customerHttpClient;
         
         
+        
         public OrderService(IOrderRepository orderRepository, ICustomerHttpClient customerHttpClient)
         {
             _orderRepository = orderRepository;
@@ -47,15 +48,6 @@ namespace OrderCase.Services
       
         public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {
-            if (getAllDto.skip < 0)
-            {
-                throw new CustomException(HttpStatusCode.BadRequest, "Skip cannot negative");
-            }
-
-            if (getAllDto.take is > 100 or < 0)
-            {
-                throw new CustomException(HttpStatusCode.BadRequest, "TooManyRequest or cannot negative");
-            }
             return await _orderRepository.GetAllSkipTakeAsync(getAllDto);
         }
 
@@ -67,6 +59,8 @@ namespace OrderCase.Services
                 throw new CustomException(HttpStatusCode.NotFound, "Customer bulunamadı. ");
             }
             orderModel.Address = customer.Address;
+            
+            
             return await _orderRepository.InsertAsync(orderModel);
         }
 

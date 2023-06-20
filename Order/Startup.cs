@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using Core.Database.Context;
 using Core.Database.Interface;
 using Core.Model.Config;
+using Domain.Validations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using OrderCase.Clients;
+using OrderCase.MessageQ;
 using OrderCase.Repository;
 using OrderCase.Services;
 using ErrorHandlingMiddleware = Core.Middleware.ErrorHandlingMiddleware;
@@ -39,6 +41,9 @@ namespace OrderCase
                 http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
             services.AddControllers().AddFluentValidation(fv=> fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllValidation>());
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderModel", Version = "v1" });
@@ -48,6 +53,7 @@ namespace OrderCase
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
+            services.AddSingleton<IMessageProducer, RabbitMqProducer>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<IOrderRepository, OrderRepository>();
