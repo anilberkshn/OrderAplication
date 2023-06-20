@@ -5,6 +5,7 @@ using Core.Middleware;
 using Core.Model.Config;
 using Customer.Repository;
 using Customer.Services;
+using Domain.Validations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +31,9 @@ namespace Customer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddFluentValidation(fv=> 
-                fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-
+                    fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddControllers().AddFluentValidation(fv=> 
+                    fv.RegisterValidatorsFromAssemblyContaining<GetAllValidation>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CustomerModel", Version = "v1" });
