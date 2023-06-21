@@ -85,5 +85,14 @@ namespace Core.Database
                 .Set(x => x.IsDeleted, true);
             _collection.FindOneAndUpdate<T>(filter, update);
         }
+        
+        public async Task<IEnumerable<T>> GetByCustomerId(Guid customerId)
+        {
+            var filter = Builders<T>.Filter.Eq("CustomerId",customerId);
+            var result = await _collection
+                .Find(filter)
+                .ToListAsync();
+            return result;
+        }
     }
 }

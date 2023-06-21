@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
@@ -86,5 +87,20 @@ namespace OrderCase.Services
            _messagePublisher.SendMessage(statusDto);
            return _orderRepository.ChangeStatus(id, statusDto);
         }
+        
+        public async Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id)
+        {
+            var orders = await _orderRepository.DeleteOrdersByCustomerId(id);
+
+            var deleteOrdersByCustomerId = orders.ToList();
+            foreach (var order in deleteOrdersByCustomerId)
+            {
+                Delete(order.Id);
+            }
+            
+            return deleteOrdersByCustomerId;
+        }
+        
+        
     }
 }

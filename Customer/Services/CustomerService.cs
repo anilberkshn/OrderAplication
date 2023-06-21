@@ -50,13 +50,11 @@ namespace Customer.Services
 
         public Task<Guid> InsertAsync(CustomerModel customerModel)
         {
-            _messageProducer.SendMessage(customerModel);
             return _customerRepository.InsertAsync(customerModel);
         }
 
         public async Task<CustomerModel> Update(Guid guid, UpdateDto updateDto)
         {
-            _messageProducer.SendMessage(updateDto);
             return await _customerRepository.Update(guid,updateDto);
         }
 

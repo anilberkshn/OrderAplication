@@ -35,7 +35,7 @@ namespace OrderCase.MessageQ
 
             while (!stoppingToken.IsCancellationRequested)
             { 
-              await  Task.Delay(50000, stoppingToken); 
+              await  Task.Delay(5000, stoppingToken); 
             }
         }
         

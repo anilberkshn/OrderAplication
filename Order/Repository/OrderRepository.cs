@@ -73,5 +73,11 @@ namespace OrderCase.Repository
             Update(x => x.Id == id, status);
             return statusDto;
         }
+
+        public async Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id)
+        {
+           
+            return  await GetByCustomerId(id);  ;
+        }
     }
 }

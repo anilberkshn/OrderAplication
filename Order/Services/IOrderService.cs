@@ -18,5 +18,6 @@ namespace OrderCase.Services
         public Guid Delete(Guid guid);
         public void SoftDelete(Guid guid, SoftDeleteDto softDeleteDto);
         public StatusDto ChangeStatus(Guid id, StatusDto statusDto);
+        public Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id);
     }
 }

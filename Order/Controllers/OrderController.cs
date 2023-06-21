@@ -99,5 +99,12 @@ namespace OrderCase.Controllers
             var orderResult=  _orderService.ChangeStatus(order.Id, statusDto);
            return Ok(id);
         }
+        
+        [HttpGet("{customerId}")]
+        public async Task<IActionResult> OrdersByCustomerId(Guid customerId)
+        {
+            var find = await _orderService.DeleteOrdersByCustomerId(customerId);
+            return Ok(find);
+        }
     }
 }
