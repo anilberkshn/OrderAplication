@@ -3,6 +3,7 @@ using Core.Database.Context;
 using Core.Database.Interface;
 using Core.Middleware;
 using Core.Model.Config;
+using Customer.MessageQ;
 using Customer.Repository;
 using Customer.Services;
 using Domain.Validations;
@@ -43,6 +44,7 @@ namespace Customer
             var client = new MongoClient(dbSettings.ConnectionString);
             var context = new Context(client,dbSettings.DatabaseName);
             
+            services.AddSingleton<IMessageProducer,CustomerDeleteProducer>();
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<IContext, Context>(_ => context);
             services.AddSingleton<ICustomerRepository,CustomerRepository>();

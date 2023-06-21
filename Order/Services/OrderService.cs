@@ -18,16 +18,12 @@ namespace OrderCase.Services
         private readonly ICustomerHttpClient _customerHttpClient;
         private readonly IMessageProducer _messagePublisher;
         
-        
-        
         public OrderService(IOrderRepository orderRepository, ICustomerHttpClient customerHttpClient, IMessageProducer messagePublisher)
         {
             _orderRepository = orderRepository;
             _customerHttpClient = customerHttpClient;
             _messagePublisher = messagePublisher;
         }
-
-
         public async Task<OrderModel> GetByIdAsync(Guid id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
@@ -40,7 +36,6 @@ namespace OrderCase.Services
             {
                 throw new CustomException(HttpStatusCode.NotFound, "Sipariş bulunamadı.");
             }
-            
             return order;
         }
 
