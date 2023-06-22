@@ -89,7 +89,6 @@ namespace OrderCase.Controllers
         {
             var order = await _orderService.GetByIdAsync(id);
             _orderService.SoftDelete(order.Id, softDeleteDto);
-            
             return Ok(id);
         }
         [HttpPut("ChangeStatus")]
@@ -100,11 +99,11 @@ namespace OrderCase.Controllers
            return Ok(id);
         }
         
-        [HttpGet("{customerId}")]
+        [HttpGet("Customer:{customerId}")]
         public async Task<IActionResult> OrdersByCustomerId(Guid customerId)
         {
-            var find = await _orderService.DeleteOrdersByCustomerId(customerId);
-            return Ok(find);
+            var findList = await _orderService.DeleteOrdersByCustomerId(customerId);
+            return Ok(findList);
         }
     }
 }

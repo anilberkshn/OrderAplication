@@ -91,14 +91,15 @@ namespace OrderCase.Services
         public async Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id)
         {
             var orders = await _orderRepository.DeleteOrdersByCustomerId(id);
-
-            var deleteOrdersByCustomerId = orders.ToList();
-            foreach (var order in deleteOrdersByCustomerId)
+          
+            var ordersByCustomerId = orders.ToList();
+            foreach (var order in ordersByCustomerId)
             {
-                Delete(order.Id);
+              //  Delete(order.Id);
             }
-            
-            return deleteOrdersByCustomerId;
+
+            Console.WriteLine(ordersByCustomerId);
+            return ordersByCustomerId;
         }
         
         

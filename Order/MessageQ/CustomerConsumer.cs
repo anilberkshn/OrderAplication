@@ -36,10 +36,10 @@ namespace OrderCase.MessageQ
             while (!stoppingToken.IsCancellationRequested)
             { 
               await  Task.Delay(5000, stoppingToken); 
-            }
+            } 
         }
         
-        public override void Dispose()
+        public override void Dispose() //
         {
             _channel.Close();
             _connection.Close();
