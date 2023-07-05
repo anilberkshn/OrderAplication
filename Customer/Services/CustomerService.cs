@@ -26,7 +26,6 @@ namespace Customer.Services
         public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
-            
             if (customer == null)
             {
                 throw new CustomException(HttpStatusCode.NotFound,"Müşteri bulunamadı.");
@@ -35,6 +34,7 @@ namespace Customer.Services
             {
                 throw new CustomException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
             }
+            _messageProducer.SendMessage(id);
             
             return customer;
         }

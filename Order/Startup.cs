@@ -35,7 +35,7 @@ namespace OrderCase
         {
 
             services.AddScoped<ICustomerHttpClient>(sp =>sp.GetRequiredService<CustomerHttpClient>());
-            services.AddHostedService<CustomerConsumer>();
+            // services.AddHostedService<CustomerConsumer>();
             services.AddHttpClient<CustomerHttpClient>((sp, http) =>
             {
                 http.BaseAddress = new Uri("http://localhost:5010/");

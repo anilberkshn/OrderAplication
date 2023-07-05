@@ -37,12 +37,15 @@ namespace OrderCase.Services
             {
                 throw new CustomException(HttpStatusCode.NotFound, "Sipariş bulunamadı.");
             }
+            _messagePublisher.SendMessage(id);
             return order;
         }
 
         public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
+            _messagePublisher.SendMessage("getall çalıştı.");
             return  await _orderRepository.GetAllAsync();
+            
         }
       
         public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
@@ -90,16 +93,22 @@ namespace OrderCase.Services
         
         public async Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id)
         {
+            //var customer = await _customerHttpClient.CheckCustomerId(id);
+
+
             var orders = await _orderRepository.DeleteOrdersByCustomerId(id);
-          
+
             var ordersByCustomerId = orders.ToList();
             foreach (var order in ordersByCustomerId)
             {
-              //  Delete(order.Id);
+                //  Delete(order.Id);
+                Console.WriteLine(order.CustomerId);
+                Console.WriteLine(order.Id);
             }
 
             Console.WriteLine(ordersByCustomerId);
             return ordersByCustomerId;
+            
         }
         
         
