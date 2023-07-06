@@ -99,7 +99,7 @@ namespace OrderCase.Controllers
            return Ok(id);
         }
         
-        [HttpGet("Customer:{customerId}")]
+        [HttpPost("Customer/{customerId}")]
         public async Task<IActionResult> OrdersByCustomerId(Guid customerId)
         {
             var findList = await _orderService.DeleteOrdersByCustomerId(customerId);

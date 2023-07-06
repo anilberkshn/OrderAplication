@@ -102,8 +102,8 @@ namespace OrderCase.Services
             foreach (var order in ordersByCustomerId)
             {
                 //  Delete(order.Id);
-                Console.WriteLine(order.CustomerId);
-                Console.WriteLine(order.Id);
+                Console.Write("Customer Id : " + order.CustomerId);
+                Console.WriteLine("order id : "+order.Id);
             }
 
             Console.WriteLine(ordersByCustomerId);
