@@ -17,7 +17,7 @@ namespace OrderCase.Repository
         {
         }
 
-        public async Task<OrderModel> GetByIdAsync(Guid id)
+        public async Task<OrderModel> GetByIdAsync(Guid id) // id ile değil id model oluşturulmalıydı
         {
             var order = await FindOneAsync(x => x.Id == id);
             return order;

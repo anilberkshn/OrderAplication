@@ -16,8 +16,7 @@ namespace OrderCase.Repository
         public Task<OrderModel> Update(Guid id, UpdateDto updateDto);
         public Guid Delete(Guid id);
         public void SoftDelete(Guid id, SoftDeleteDto softDeleteDto);
-        public StatusDto ChangeStatus(Guid id, StatusDto statusDto);
-        
+        public StatusDto ChangeStatus(Guid id, StatusDto statusDto); 
         public Task<IEnumerable<OrderModel>> DeleteOrdersByCustomerId(Guid id);
     }
 }

@@ -8,4 +8,4 @@ namespace OrderCase.Clients
         public string Email { get; set; }
         public Address Address { get; set; }
     }
-}
+} 

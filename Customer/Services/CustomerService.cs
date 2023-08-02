@@ -34,7 +34,7 @@ namespace Customer.Services
             {
                 throw new CustomException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
             }
-            _messageProducer.SendMessage(id);
+            _messageProducer.SendMessage(id);// Json yollamak her zamna
             
             return customer;
         }

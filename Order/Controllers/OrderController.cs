@@ -78,7 +78,7 @@ namespace OrderCase.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateDeveloperAsync(Guid id, [FromBody] UpdateDto updateDto)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateDto updateDto)
         {
             var result = await _orderService.Update(id, updateDto);
             return Ok(result);

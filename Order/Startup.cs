@@ -72,6 +72,7 @@ namespace OrderCase
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

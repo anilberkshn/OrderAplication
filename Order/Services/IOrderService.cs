@@ -10,7 +10,6 @@ namespace OrderCase.Services
     public interface IOrderService
     {
         public Task<OrderModel> GetByIdAsync(Guid id);
-        
         public Task<IEnumerable<OrderModel>> GetAllAsync();
         public Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto);
         public Task<Guid> InsertAsync(OrderModel orderModel);
