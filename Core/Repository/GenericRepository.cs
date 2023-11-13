@@ -4,13 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Database.Interface;
-using Core.Model;
 using Core.Model.Entities;
 using Core.Model.RequestModel;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Core.Database
+namespace Core.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : GenericDocument
     {
@@ -86,7 +84,7 @@ namespace Core.Database
             _collection.FindOneAndUpdate<T>(filter, update);
         }
         
-        public async Task<IEnumerable<T>> GetByCustomerId(Guid customerId)
+        public async Task<IEnumerable<T>> GetByCustomerId(Guid customerId) // GetOrderByCustomerId  name chance
         {
             var filter = Builders<T>.Filter.Eq("CustomerId",customerId);
             var result = await _collection

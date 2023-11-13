@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Core.Model.ErrorModels;
+using Newtonsoft.Json;
 using OrderCase.Model.Entities;
 
 namespace OrderCase.Clients
@@ -19,6 +20,7 @@ namespace OrderCase.Clients
         public async Task<CustomerClientModel> GetCustomerFromCustomerApi(Guid customerId)
         {
             var response = await _httpClient.GetAsync($"api/customers/{customerId}");
+            var jsonConvert = JsonConvert.SerializeObject(response);
             if (response.IsSuccessStatusCode)
             {
                 var customer = await response.Content.ReadFromJsonAsync<CustomerClientModel>();

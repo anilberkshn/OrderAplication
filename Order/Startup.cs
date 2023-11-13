@@ -1,8 +1,8 @@
 using System;
 using System.Net.Http.Headers;
-using Core.Database.Context;
 using Core.Database.Interface;
 using Core.Model.Config;
+using Core.Repository.Context;
 using Domain.Validations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;

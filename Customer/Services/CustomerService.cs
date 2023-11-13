@@ -26,13 +26,13 @@ namespace Customer.Services
         public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
-            if (customer == null)
+            if (customer == null) // todo: tek if içinde çözülebilir sanki. 
             {
-                throw new CustomException(HttpStatusCode.NotFound,"Müşteri bulunamadı.");
+                throw new CustomException(HttpStatusCode.NotFound,"Customers not found");
             }                   
             if (customer.IsDeleted)    
             {
-                throw new CustomException(HttpStatusCode.NotFound, "Müşteri bulunamadı.");
+                throw new CustomException(HttpStatusCode.NotFound, "Customers not found");
             }
             _messageProducer.SendMessage(id);// Json yollamak her zamna
             
@@ -60,6 +60,17 @@ namespace Customer.Services
 
         public Guid Delete(Guid guid)
         {
+            // // Todo : bu parantez içindeki kısımı harici bir metod yapılıp yapılabilir. yada direk getById koysamda olur sanki
+            
+            // var customer =  _customerRepository.GetByIdAsync(guid);
+            // if (customer == null) // todo: tek if içinde çözülebilir sanki. 
+            // {
+            //     throw new CustomException(HttpStatusCode.NotFound,"Customers not found");
+            // }                   
+            // if (customer.IsDeleted)    
+            // {
+            //     throw new CustomException(HttpStatusCode.NotFound, "Customers not found");
+            // }
             _messageProducer.SendMessage(guid);
             return _customerRepository.Delete(guid);
         }

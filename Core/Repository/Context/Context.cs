@@ -1,7 +1,7 @@
 using Core.Database.Interface;
 using MongoDB.Driver;
 
-namespace Core.Database.Context
+namespace Core.Repository.Context
 {
     public class Context: IContext
     {

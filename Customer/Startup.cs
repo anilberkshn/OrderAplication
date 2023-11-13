@@ -1,8 +1,8 @@
 using System;
-using Core.Database.Context;
 using Core.Database.Interface;
 using Core.Middleware;
 using Core.Model.Config;
+using Core.Repository.Context;
 using Customer.MessageQ;
 using Customer.Repository;
 using Customer.Services;

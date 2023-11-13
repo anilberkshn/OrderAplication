@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Core.Model.Entities;
 
-namespace Core.Database
+namespace Core.Repository
 {
     public class Test
     {
