@@ -1,4 +1,4 @@
-using Core.Database.Interface;
+using Core.Repository.Interface;
 using MongoDB.Driver;
 
 namespace Core.Repository.Context

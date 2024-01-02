@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Database.Interface;
 using Core.Model.Entities;
 using Core.Model.RequestModel;
+using Core.Repository.Interface;
 using MongoDB.Driver;
 
 namespace Core.Repository
@@ -34,7 +34,7 @@ namespace Core.Repository
             return record.Id;
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync()
+        public async Task<IEnumerable<T>> GenericRepositoryGetAllAsync()
         {
             var record = await _collection.AsQueryable().ToListAsync();
             return record;

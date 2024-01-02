@@ -27,7 +27,7 @@ namespace OrderCase.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateDto createDto)
         {
-            var order = new OrderModel()
+           var order = new OrderModel()
             {
                 CustomerId = createDto.CustomerId,
                 Quantity = createDto.Quantity,
@@ -41,8 +41,7 @@ namespace OrderCase.Controllers
             {
                 Id = order.Id
             };
-            
-            
+           
             return Ok(response);
         }
 
@@ -74,7 +73,7 @@ namespace OrderCase.Controllers
             var byId = await _orderService.GetByIdAsync(id);
             _orderService.Delete(byId.Id);
             
-            return Ok(id);
+            return Ok(id);  // geriye boş sınıf 
         }
 
         [HttpPut]

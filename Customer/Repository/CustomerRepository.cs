@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Database;
-using Core.Database.Interface;
-using Core.Repository.Context;
+// using Core.Database;
+// using Core.Repository.Context;
 using Core.Model.RequestModel;
 using Core.Repository;
+using Core.Repository.Interface;
 using Customer.Model.Entities;
 using Customer.Model.RequestModels;
 using MongoDB.Driver;
@@ -26,7 +26,7 @@ namespace Customer.Repository
 
         public async Task<IEnumerable<CustomerModel>> GetAllAsync()
         {
-            return await FindAllAsync();
+            return await GenericRepositoryGetAllAsync();
         }  
         public async Task<IEnumerable<CustomerModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {

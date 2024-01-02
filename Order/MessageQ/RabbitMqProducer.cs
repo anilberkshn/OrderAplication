@@ -10,7 +10,7 @@ namespace OrderCase.MessageQ
         public void SendMessage<T>(T message)
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
-            var connection = factory.CreateConnection();
+            var connection = factory.CreateConnection(); // todo : her seferinde connection oluşturmamalı
             using var channel = connection.CreateModel();
             
             channel.QueueDeclare(queue: "rabbitOrders",

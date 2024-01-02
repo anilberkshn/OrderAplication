@@ -12,7 +12,7 @@ namespace Domain.Validations
                 .WithMessage(" Skip cannot negative.");
             RuleFor(x => x.Take).NotEmpty().GreaterThanOrEqualTo(0)
                 .LessThanOrEqualTo(100).WithMessage("TooManyRequest or cannot negative.");
-
+            //todo : .ıncIusiveBetween(1 , int .MaxvaIue) sıfır default olacağı için 
         }
     }
 }

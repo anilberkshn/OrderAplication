@@ -1,8 +1,8 @@
 using System;
 using System.Net.Http.Headers;
-using Core.Database.Interface;
 using Core.Model.Config;
 using Core.Repository.Context;
+using Core.Repository.Interface;
 using Domain.Validations;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -41,9 +41,10 @@ namespace OrderCase
                 http.BaseAddress = new Uri("http://localhost:5010/");
                 http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
-            services.AddControllers().AddFluentValidation(fv=> fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-            services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllValidation>());
+            
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetAllValidation>());
             
             services.AddSwaggerGen(c =>
             {

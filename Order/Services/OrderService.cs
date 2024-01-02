@@ -43,7 +43,7 @@ namespace OrderCase.Services
 
         public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
-            _messagePublisher.SendMessage("getall çalıştı.");
+            _messagePublisher.SendMessage("GetAll worked.");
             return  await _orderRepository.GetAllAsync();
             
         }
@@ -56,10 +56,10 @@ namespace OrderCase.Services
         public async Task<Guid> InsertAsync(OrderModel orderModel)
         {
             var customer = await _customerHttpClient.GetCustomerFromCustomerApi(orderModel.CustomerId);
-            if (customer == null)
-            {
-                throw new CustomException(HttpStatusCode.NotFound, "Customer bulunamadı. ");
-            }
+            // if (customer == null)
+            // {
+            //     throw new CustomException(HttpStatusCode.NotFound, "Customer bulunamadı. ");
+            // }
             orderModel.Address = customer.Address;
             
             _messagePublisher.SendMessage(orderModel);

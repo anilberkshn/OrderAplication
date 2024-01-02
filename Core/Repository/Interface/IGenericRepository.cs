@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Core.Model.RequestModel;
 using MongoDB.Driver;
 
-namespace Core.Database.Interface
+namespace Core.Repository.Interface
 {
     public interface IGenericRepository<T>
     {
         public Task<Guid> CreateAsync (T record);
-        public Task<IEnumerable<T>> FindAllAsync();
+        public Task<IEnumerable<T>> GenericRepositoryGetAllAsync();
         public Task<IEnumerable<T>> FindAllSkipTakeAsync(GetAllDto getAllDto);
         public Task<IEnumerable<T>> GetManyAsync(GetAllDto getAllDto);
         public  Task<T> FindOneAsync(Expression<Func<T, bool>> expression);

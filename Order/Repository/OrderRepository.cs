@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Database;
-using Core.Database.Interface;
-using Core.Database;
-using Core.Database.Interface;
+// using Core.Database;
+// using Core.Database;
 using Core.Model.RequestModel;
 using Core.Repository;
+using Core.Repository.Interface;
 using MongoDB.Driver;
 using OrderCase.Model.Entities;
 using OrderCase.Model.RequestModels;
@@ -28,7 +27,7 @@ namespace OrderCase.Repository
 
         public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
-            return await FindAllAsync();
+            return await GenericRepositoryGetAllAsync();
         }
         public async Task<IEnumerable<OrderModel>> GetAllSkipTakeAsync(GetAllDto getAllDto)
         {
